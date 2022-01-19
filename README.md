@@ -2,7 +2,15 @@
 Download a NCBI genome, process it with your own code, then trash it 
 
 This script is instrumental to analyze as many NCBI genomes as you want, without having to allocate the storage space for them.
-In a single run ncbi_single_use_genome will download a genome, process it according to options, then trash it
+In a single run ncbi_single_use_genome will download a genome, process it according to options, then trash it.
+
+This script takes as input a genome accession from NCBI. To search for these accessions (e.g. for a certain species or lineage) use the command 'datasets'.
+
+For example, to obtain a table with information (including its accession, column "assminfo-accession") for all available genome assemblies for any "Drosophila":
+
+datasets download  genome taxon "Drosophila" --dehydrated --filename  my_search.zip
+dataformat tsv genome --package my_search.zip > my_search.tsv
+
 
 Requirements:
 -------------
