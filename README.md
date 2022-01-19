@@ -8,9 +8,10 @@ This script takes as input a genome accession from NCBI. To search for these acc
 
 For example, to obtain a table with information (including its accession, column "assminfo-accession") for all available genome assemblies for any "Drosophila":
 
+```bash
 datasets download  genome taxon "Drosophila" --dehydrated --filename  my_search.zip
 dataformat tsv genome --package my_search.zip > my_search.tsv
-
+```
 
 Requirements:
 -------------
