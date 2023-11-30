@@ -54,7 +54,7 @@ def main(args={}):
   
   ### loading options
   if not args:
-    opt=command_line_options(def_opt, help_msg)
+    opt=command_line_options(def_opt, help_msg,synonyms=command_line_synonyms)
   else:   
     opt=args
 
