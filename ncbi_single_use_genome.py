@@ -1,6 +1,6 @@
 #! /usr/bin/env -S python3 -u
 import os, shutil, sys, glob, traceback
-from easyterm import * 
+from easyterm import *
 
 help_msg="""This program downloads one specific NCBI assembly, executes certains operations, then cleans up data
 
@@ -54,7 +54,7 @@ def main(args={}):
   
   ### loading options
   if not args:
-    opt=command_line_options(def_opt, help_msg, synonyms=command_line_synonyms)
+    opt=command_line_options(def_opt, help_msg)
   else:   
     opt=args
 
@@ -90,8 +90,7 @@ def main(args={}):
   ## download dehydrated
   cmd_download_dehydra = f"""\
 datasets download genome accession {accession} \
---reference --dehydrated \
---exclude-genomic-cds --exclude-gff3 --exclude-protein --exclude-rna \
+--reference --dehydrated --include gff3 \
 --filename {zipfile} """
   run_cmd(cmd_download_dehydra,
           stdout=None, stderr=None) # messages printed to screen
@@ -101,7 +100,7 @@ datasets download genome accession {accession} \
   cmd_format_tsv = f"""
 dataformat tsv genome \
 --package {zipfile} \
---fields tax-id,organism-name"""
+--fields organism-tax-id,organism-name"""
   x = run_cmd(cmd_format_tsv).stdout 
   taxid, species = x.split('\n')[1].split('\t')
   mspecies=mask_chars(species)
@@ -125,7 +124,6 @@ dataformat tsv genome \
   cmd_download_hydra=f"""
 datasets rehydrate \
 --directory {datadir} \
---match "/{accession}/" \
 --max-workers {opt['w']} \
 {progressbar} """
   run_cmd(cmd_download_hydra,
